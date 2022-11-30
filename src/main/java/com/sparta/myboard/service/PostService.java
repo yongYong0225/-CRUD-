@@ -21,9 +21,12 @@ public class PostService {
 
     //@Transactional -> acid캐시를 깨지지 않게 해줌
     @Transactional (readOnly = true)
-    public List<PostResponseDto> getPosts(){
-        return postRepository.findAllPostByOrderByCreatedAtDesc().stream().map(PostResponseDto::new)
-                .collect(Collectors.toList());
+    public List<PostResponseDto> getPosts(){ //#2 메서드 실행
+        return //#7 컨트롤러로 데이터를 리턴해준다
+                postRepository.findAllPostByOrderByCreatedAtDesc() //#3 레포지토리가 데이터를 찾아옴
+                .stream() //#4 stream 클래스로 찾아온 데이터를 변환시켜줌
+                .map(PostResponseDto::new) //#5 PostResponseDto에 레포지토리가 찾아온 데이터를 할당시켜줌
+                .collect(Collectors.toList()); //#6 PostResponseDto를 리스트에 담아줌
     }
 
     @Transactional
