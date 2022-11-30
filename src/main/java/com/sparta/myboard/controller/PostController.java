@@ -1,7 +1,7 @@
 package com.sparta.myboard.controller;
 
 
-import com.sparta.myboard.dto.PostDeleteRequeestDto;
+import com.sparta.myboard.dto.PostDeleteRequestDto;
 import com.sparta.myboard.dto.PostDeleteResponseDto;
 import com.sparta.myboard.dto.PostRequestDto;
 import com.sparta.myboard.dto.PostResponseDto;
@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @DeleteMapping("/api/post/{id}") //선택한 게시글 삭제
-    public PostDeleteResponseDto deletePost(@PathVariable Long id, @RequestBody PostDeleteRequeestDto requeestDto){
+    public PostDeleteResponseDto deletePost(@PathVariable Long id, @RequestBody PostDeleteRequestDto requeestDto){
         boolean deleteResult = postService.deletePost(id, requeestDto.getPassword());
         return new PostDeleteResponseDto(deleteResult);
     }
