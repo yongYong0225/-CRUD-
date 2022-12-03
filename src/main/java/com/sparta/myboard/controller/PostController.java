@@ -1,10 +1,7 @@
 package com.sparta.myboard.controller;
 
 
-import com.sparta.myboard.dto.PostDeleteRequestDto;
-import com.sparta.myboard.dto.PostDeleteResponseDto;
-import com.sparta.myboard.dto.PostRequestDto;
-import com.sparta.myboard.dto.PostResponseDto;
+import com.sparta.myboard.dto.*;
 import com.sparta.myboard.entity.Post;
 import com.sparta.myboard.service.PostService;
 import lombok.RequiredArgsConstructor;
