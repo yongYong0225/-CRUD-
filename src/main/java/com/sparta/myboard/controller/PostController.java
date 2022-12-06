@@ -7,6 +7,7 @@ import com.sparta.myboard.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +23,8 @@ public class PostController {
     }
 
     @PostMapping("/api/post") // 게시글 작성
-    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto){
-        return postService.creatPost(requestDto);
+    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, HttpServletRequest httpServletRequest){
+        return postService.creatPost(requestDto, httpServletRequest);
     }
 
     @GetMapping("/api/post/{id}") // 선택한 게시글 조회
@@ -34,13 +35,12 @@ public class PostController {
     }
 
     @PutMapping("/api/post/{id}") //선택한 게시글 수정
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        return postService.updatePost(id, requestDto);
+    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, HttpServletRequest httpServletRequest){
+        return postService.updatePost(id, requestDto, httpServletRequest);
     }
 
     @DeleteMapping("/api/post/{id}") //선택한 게시글 삭제
-    public PostDeleteResponseDto deletePost(@PathVariable Long id, @RequestBody PostDeleteRequestDto requeestDto){
-        boolean deleteResult = postService.deletePost(id, requeestDto.getPassword());  //id와 일치하는 row를 삭제함
-        return new PostDeleteResponseDto(deleteResult);
+    public PostDeleteResponseDto deletePost(@PathVariable Long id, HttpServletRequest httpServletRequest) {
+        return postService.deletePost(id, httpServletRequest);
     }
 }
