@@ -3,11 +3,13 @@ package com.sparta.myboard.service;
 import com.sparta.myboard.dto.LoginRequestDto;
 import com.sparta.myboard.dto.SignupRequestDto;
 import com.sparta.myboard.entity.User;
+import com.sparta.myboard.jwt.JwtUtil;
 import com.sparta.myboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
     @Transactional
     public void signup(SignupRequestDto signupRequestDto){
@@ -32,7 +35,7 @@ public class UserService {
 
     }
 
-    public void login(LoginRequestDto loginRequestDto){
+    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response){
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -45,6 +48,8 @@ public class UserService {
         if(!user.getPassword().equals(password)){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
     }
 
 }
