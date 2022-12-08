@@ -21,15 +21,16 @@ public class UserService {
 
     @Transactional
     public void signup(SignupRequestDto signupRequestDto){
+        //받아온 유저네임과 패스워드를 변수에 저장
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
 
-        //회원 중복 확인
+        //회원 중복 확인, 받아온 값이 유저레포지토리에 있는지 확인
         Optional<User> found = userRepository.findByUsername(username);
-        if (found.isPresent()) {
+        if (found.isPresent()) { //존재하는 것을 찾았다면 에러처리
             throw new IllegalArgumentException("이미 등록된 ID 입니다.");
         }
-
+        //user 객체에 두 값을 저장
         User user = new User(username, password);
         userRepository.save(user);
 
